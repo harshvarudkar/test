@@ -1,0 +1,377 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyNhxf5CwY/+z9qQyxDIL1Lq",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/harshvarudkar/test/blob/master/RAG_IT\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 1,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 1000
+        },
+        "collapsed": true,
+        "id": "Q7Q1i7qH4ENe",
+        "outputId": "e1caef92-fd44-4ff8-ab2b-e8d9455284bc"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m2.5/2.5 MB\u001b[0m \u001b[31m31.7 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n",
+            "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m98.6/98.6 kB\u001b[0m \u001b[31m8.0 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n",
+            "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m548.1/548.1 kB\u001b[0m \u001b[31m33.1 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n",
+            "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m1.0/1.0 MB\u001b[0m \u001b[31m50.9 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n",
+            "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m73.1/73.1 kB\u001b[0m \u001b[31m5.7 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n",
+            "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m51.0/51.0 kB\u001b[0m \u001b[31m3.9 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n",
+            "\u001b[?25h\u001b[31mERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.\n",
+            "google-colab 1.0.0 requires requests==2.32.4, but you have requests 2.34.2 which is incompatible.\u001b[0m\u001b[31m\n",
+            "\u001b[0mRequirement already satisfied: pip in /usr/local/lib/python3.12/dist-packages (24.1.2)\n",
+            "Collecting pip\n",
+            "  Downloading pip-26.1.1-py3-none-any.whl.metadata (4.6 kB)\n",
+            "Requirement already satisfied: setuptools in /usr/local/lib/python3.12/dist-packages (75.2.0)\n",
+            "Collecting setuptools\n",
+            "  Downloading setuptools-82.0.1-py3-none-any.whl.metadata (6.5 kB)\n",
+            "Requirement already satisfied: wheel in /usr/local/lib/python3.12/dist-packages (0.47.0)\n",
+            "Requirement already satisfied: packaging>=24.0 in /usr/local/lib/python3.12/dist-packages (from wheel) (26.1)\n",
+            "Downloading pip-26.1.1-py3-none-any.whl (1.8 MB)\n",
+            "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m1.8/1.8 MB\u001b[0m \u001b[31m23.6 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n",
+            "\u001b[?25hDownloading setuptools-82.0.1-py3-none-any.whl (1.0 MB)\n",
+            "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m1.0/1.0 MB\u001b[0m \u001b[31m43.3 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n",
+            "\u001b[?25hInstalling collected packages: setuptools, pip\n",
+            "  Attempting uninstall: setuptools\n",
+            "    Found existing installation: setuptools 75.2.0\n",
+            "    Uninstalling setuptools-75.2.0:\n",
+            "      Successfully uninstalled setuptools-75.2.0\n",
+            "  Attempting uninstall: pip\n",
+            "    Found existing installation: pip 24.1.2\n",
+            "    Uninstalling pip-24.1.2:\n",
+            "      Successfully uninstalled pip-24.1.2\n",
+            "\u001b[31mERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.\n",
+            "ipython 7.34.0 requires jedi>=0.16, which is not installed.\u001b[0m\u001b[31m\n",
+            "\u001b[0mSuccessfully installed pip-26.1.1 setuptools-82.0.1\n"
+          ]
+        },
+        {
+          "output_type": "display_data",
+          "data": {
+            "application/vnd.colab-display-data+json": {
+              "pip_warning": {
+                "packages": [
+                  "_distutils_hack"
+                ]
+              },
+              "id": "8a684f260a294ceab94833476bcc0f2e"
+            }
+          },
+          "metadata": {}
+        },
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Requirement already satisfied: langchain in /usr/local/lib/python3.12/dist-packages (1.2.15)\n",
+            "Collecting langchain\n",
+            "  Downloading langchain-1.3.1-py3-none-any.whl.metadata (5.8 kB)\n",
+            "Requirement already satisfied: langchain-community in /usr/local/lib/python3.12/dist-packages (0.4.1)\n",
+            "Requirement already satisfied: langchain-openai in /usr/local/lib/python3.12/dist-packages (1.2.1)\n",
+            "Requirement already satisfied: langchain-text-splitters in /usr/local/lib/python3.12/dist-packages (1.1.2)\n",
+            "Requirement already satisfied: langchain-classic in /usr/local/lib/python3.12/dist-packages (1.0.7)\n",
+            "Collecting pypdf\n",
+            "  Downloading pypdf-6.12.0-py3-none-any.whl.metadata (7.2 kB)\n",
+            "Collecting faiss-cpu\n",
+            "  Downloading faiss_cpu-1.13.2-cp310-abi3-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (7.6 kB)\n",
+            "Requirement already satisfied: langchain-core<2.0.0,>=1.4.0 in /usr/local/lib/python3.12/dist-packages (from langchain) (1.4.0)\n",
+            "Collecting langgraph<1.3.0,>=1.2.0 (from langchain)\n",
+            "  Downloading langgraph-1.2.0-py3-none-any.whl.metadata (8.0 kB)\n",
+            "Requirement already satisfied: pydantic<3.0.0,>=2.7.4 in /usr/local/lib/python3.12/dist-packages (from langchain) (2.12.3)\n",
+            "Requirement already satisfied: jsonpatch<2.0.0,>=1.33.0 in /usr/local/lib/python3.12/dist-packages (from langchain-core<2.0.0,>=1.4.0->langchain) (1.33)\n",
+            "Requirement already satisfied: langchain-protocol>=0.0.14 in /usr/local/lib/python3.12/dist-packages (from langchain-core<2.0.0,>=1.4.0->langchain) (0.0.15)\n",
+            "Requirement already satisfied: langsmith<1.0.0,>=0.3.45 in /usr/local/lib/python3.12/dist-packages (from langchain-core<2.0.0,>=1.4.0->langchain) (0.7.34)\n",
+            "Requirement already satisfied: packaging>=23.2.0 in /usr/local/lib/python3.12/dist-packages (from langchain-core<2.0.0,>=1.4.0->langchain) (26.1)\n",
+            "Requirement already satisfied: pyyaml<7.0.0,>=5.3.0 in /usr/local/lib/python3.12/dist-packages (from langchain-core<2.0.0,>=1.4.0->langchain) (6.0.3)\n",
+            "Requirement already satisfied: tenacity!=8.4.0,<10.0.0,>=8.1.0 in /usr/local/lib/python3.12/dist-packages (from langchain-core<2.0.0,>=1.4.0->langchain) (9.1.4)\n",
+            "Requirement already satisfied: typing-extensions<5.0.0,>=4.7.0 in /usr/local/lib/python3.12/dist-packages (from langchain-core<2.0.0,>=1.4.0->langchain) (4.15.0)\n",
+            "Requirement already satisfied: uuid-utils<1.0,>=0.12.0 in /usr/local/lib/python3.12/dist-packages (from langchain-core<2.0.0,>=1.4.0->langchain) (0.14.1)\n",
+            "Requirement already satisfied: jsonpointer>=1.9 in /usr/local/lib/python3.12/dist-packages (from jsonpatch<2.0.0,>=1.33.0->langchain-core<2.0.0,>=1.4.0->langchain) (3.1.1)\n",
+            "Collecting langgraph-checkpoint<5.0.0,>=4.1.0 (from langgraph<1.3.0,>=1.2.0->langchain)\n",
+            "  Downloading langgraph_checkpoint-4.1.0-py3-none-any.whl.metadata (5.2 kB)\n",
+            "Collecting langgraph-prebuilt<1.2.0,>=1.1.0 (from langgraph<1.3.0,>=1.2.0->langchain)\n",
+            "  Downloading langgraph_prebuilt-1.1.0-py3-none-any.whl.metadata (5.2 kB)\n",
+            "Requirement already satisfied: langgraph-sdk<0.4.0,>=0.3.0 in /usr/local/lib/python3.12/dist-packages (from langgraph<1.3.0,>=1.2.0->langchain) (0.3.13)\n",
+            "Requirement already satisfied: xxhash>=3.5.0 in /usr/local/lib/python3.12/dist-packages (from langgraph<1.3.0,>=1.2.0->langchain) (3.6.0)\n",
+            "Requirement already satisfied: ormsgpack>=1.12.0 in /usr/local/lib/python3.12/dist-packages (from langgraph-checkpoint<5.0.0,>=4.1.0->langgraph<1.3.0,>=1.2.0->langchain) (1.12.2)\n",
+            "Requirement already satisfied: httpx>=0.25.2 in /usr/local/lib/python3.12/dist-packages (from langgraph-sdk<0.4.0,>=0.3.0->langgraph<1.3.0,>=1.2.0->langchain) (0.28.1)\n",
+            "Requirement already satisfied: orjson>=3.11.5 in /usr/local/lib/python3.12/dist-packages (from langgraph-sdk<0.4.0,>=0.3.0->langgraph<1.3.0,>=1.2.0->langchain) (3.11.8)\n",
+            "Requirement already satisfied: requests-toolbelt>=1.0.0 in /usr/local/lib/python3.12/dist-packages (from langsmith<1.0.0,>=0.3.45->langchain-core<2.0.0,>=1.4.0->langchain) (1.0.0)\n",
+            "Requirement already satisfied: requests>=2.0.0 in /usr/local/lib/python3.12/dist-packages (from langsmith<1.0.0,>=0.3.45->langchain-core<2.0.0,>=1.4.0->langchain) (2.34.2)\n",
+            "Requirement already satisfied: zstandard>=0.23.0 in /usr/local/lib/python3.12/dist-packages (from langsmith<1.0.0,>=0.3.45->langchain-core<2.0.0,>=1.4.0->langchain) (0.25.0)\n",
+            "Requirement already satisfied: anyio in /usr/local/lib/python3.12/dist-packages (from httpx>=0.25.2->langgraph-sdk<0.4.0,>=0.3.0->langgraph<1.3.0,>=1.2.0->langchain) (4.13.0)\n",
+            "Requirement already satisfied: certifi in /usr/local/lib/python3.12/dist-packages (from httpx>=0.25.2->langgraph-sdk<0.4.0,>=0.3.0->langgraph<1.3.0,>=1.2.0->langchain) (2026.4.22)\n",
+            "Requirement already satisfied: httpcore==1.* in /usr/local/lib/python3.12/dist-packages (from httpx>=0.25.2->langgraph-sdk<0.4.0,>=0.3.0->langgraph<1.3.0,>=1.2.0->langchain) (1.0.9)\n",
+            "Requirement already satisfied: idna in /usr/local/lib/python3.12/dist-packages (from httpx>=0.25.2->langgraph-sdk<0.4.0,>=0.3.0->langgraph<1.3.0,>=1.2.0->langchain) (3.13)\n",
+            "Requirement already satisfied: h11>=0.16 in /usr/local/lib/python3.12/dist-packages (from httpcore==1.*->httpx>=0.25.2->langgraph-sdk<0.4.0,>=0.3.0->langgraph<1.3.0,>=1.2.0->langchain) (0.16.0)\n",
+            "Requirement already satisfied: annotated-types>=0.6.0 in /usr/local/lib/python3.12/dist-packages (from pydantic<3.0.0,>=2.7.4->langchain) (0.7.0)\n",
+            "Requirement already satisfied: pydantic-core==2.41.4 in /usr/local/lib/python3.12/dist-packages (from pydantic<3.0.0,>=2.7.4->langchain) (2.41.4)\n",
+            "Requirement already satisfied: typing-inspection>=0.4.2 in /usr/local/lib/python3.12/dist-packages (from pydantic<3.0.0,>=2.7.4->langchain) (0.4.2)\n",
+            "Requirement already satisfied: SQLAlchemy<3.0.0,>=1.4.0 in /usr/local/lib/python3.12/dist-packages (from langchain-community) (2.0.49)\n",
+            "Requirement already satisfied: aiohttp<4.0.0,>=3.8.3 in /usr/local/lib/python3.12/dist-packages (from langchain-community) (3.13.5)\n",
+            "Requirement already satisfied: dataclasses-json<0.7.0,>=0.6.7 in /usr/local/lib/python3.12/dist-packages (from langchain-community) (0.6.7)\n",
+            "Requirement already satisfied: pydantic-settings<3.0.0,>=2.10.1 in /usr/local/lib/python3.12/dist-packages (from langchain-community) (2.14.0)\n",
+            "Requirement already satisfied: httpx-sse<1.0.0,>=0.4.0 in /usr/local/lib/python3.12/dist-packages (from langchain-community) (0.4.3)\n",
+            "Requirement already satisfied: numpy>=1.26.2 in /usr/local/lib/python3.12/dist-packages (from langchain-community) (2.0.2)\n",
+            "Requirement already satisfied: aiohappyeyeballs>=2.5.0 in /usr/local/lib/python3.12/dist-packages (from aiohttp<4.0.0,>=3.8.3->langchain-community) (2.6.1)\n",
+            "Requirement already satisfied: aiosignal>=1.4.0 in /usr/local/lib/python3.12/dist-packages (from aiohttp<4.0.0,>=3.8.3->langchain-community) (1.4.0)\n",
+            "Requirement already satisfied: attrs>=17.3.0 in /usr/local/lib/python3.12/dist-packages (from aiohttp<4.0.0,>=3.8.3->langchain-community) (26.1.0)\n",
+            "Requirement already satisfied: frozenlist>=1.1.1 in /usr/local/lib/python3.12/dist-packages (from aiohttp<4.0.0,>=3.8.3->langchain-community) (1.8.0)\n",
+            "Requirement already satisfied: multidict<7.0,>=4.5 in /usr/local/lib/python3.12/dist-packages (from aiohttp<4.0.0,>=3.8.3->langchain-community) (6.7.1)\n",
+            "Requirement already satisfied: propcache>=0.2.0 in /usr/local/lib/python3.12/dist-packages (from aiohttp<4.0.0,>=3.8.3->langchain-community) (0.4.1)\n",
+            "Requirement already satisfied: yarl<2.0,>=1.17.0 in /usr/local/lib/python3.12/dist-packages (from aiohttp<4.0.0,>=3.8.3->langchain-community) (1.23.0)\n",
+            "Requirement already satisfied: marshmallow<4.0.0,>=3.18.0 in /usr/local/lib/python3.12/dist-packages (from dataclasses-json<0.7.0,>=0.6.7->langchain-community) (3.26.2)\n",
+            "Requirement already satisfied: typing-inspect<1,>=0.4.0 in /usr/local/lib/python3.12/dist-packages (from dataclasses-json<0.7.0,>=0.6.7->langchain-community) (0.9.0)\n",
+            "Requirement already satisfied: python-dotenv>=0.21.0 in /usr/local/lib/python3.12/dist-packages (from pydantic-settings<3.0.0,>=2.10.1->langchain-community) (1.2.2)\n",
+            "Requirement already satisfied: charset_normalizer<4,>=2 in /usr/local/lib/python3.12/dist-packages (from requests>=2.0.0->langsmith<1.0.0,>=0.3.45->langchain-core<2.0.0,>=1.4.0->langchain) (3.4.7)\n",
+            "Requirement already satisfied: urllib3<3,>=1.26 in /usr/local/lib/python3.12/dist-packages (from requests>=2.0.0->langsmith<1.0.0,>=0.3.45->langchain-core<2.0.0,>=1.4.0->langchain) (2.5.0)\n",
+            "Requirement already satisfied: greenlet>=1 in /usr/local/lib/python3.12/dist-packages (from SQLAlchemy<3.0.0,>=1.4.0->langchain-community) (3.4.0)\n",
+            "Requirement already satisfied: mypy-extensions>=0.3.0 in /usr/local/lib/python3.12/dist-packages (from typing-inspect<1,>=0.4.0->dataclasses-json<0.7.0,>=0.6.7->langchain-community) (1.1.0)\n",
+            "Requirement already satisfied: openai<3.0.0,>=2.26.0 in /usr/local/lib/python3.12/dist-packages (from langchain-openai) (2.32.0)\n",
+            "Requirement already satisfied: tiktoken<1.0.0,>=0.7.0 in /usr/local/lib/python3.12/dist-packages (from langchain-openai) (0.12.0)\n",
+            "Requirement already satisfied: distro<2,>=1.7.0 in /usr/local/lib/python3.12/dist-packages (from openai<3.0.0,>=2.26.0->langchain-openai) (1.9.0)\n",
+            "Requirement already satisfied: jiter<1,>=0.10.0 in /usr/local/lib/python3.12/dist-packages (from openai<3.0.0,>=2.26.0->langchain-openai) (0.14.0)\n",
+            "Requirement already satisfied: sniffio in /usr/local/lib/python3.12/dist-packages (from openai<3.0.0,>=2.26.0->langchain-openai) (1.3.1)\n",
+            "Requirement already satisfied: tqdm>4 in /usr/local/lib/python3.12/dist-packages (from openai<3.0.0,>=2.26.0->langchain-openai) (4.67.3)\n",
+            "Requirement already satisfied: regex>=2022.1.18 in /usr/local/lib/python3.12/dist-packages (from tiktoken<1.0.0,>=0.7.0->langchain-openai) (2025.11.3)\n",
+            "Downloading langchain-1.3.1-py3-none-any.whl (114 kB)\n",
+            "Downloading langgraph-1.2.0-py3-none-any.whl (234 kB)\n",
+            "Downloading langgraph_checkpoint-4.1.0-py3-none-any.whl (56 kB)\n",
+            "Downloading langgraph_prebuilt-1.1.0-py3-none-any.whl (41 kB)\n",
+            "Downloading pypdf-6.12.0-py3-none-any.whl (343 kB)\n",
+            "Downloading faiss_cpu-1.13.2-cp310-abi3-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (23.8 MB)\n",
+            "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m23.8/23.8 MB\u001b[0m \u001b[31m123.5 MB/s\u001b[0m  \u001b[33m0:00:00\u001b[0m\n",
+            "\u001b[?25hInstalling collected packages: pypdf, faiss-cpu, langgraph-checkpoint, langgraph-prebuilt, langgraph, langchain\n",
+            "\u001b[2K  Attempting uninstall: langgraph-checkpoint\n",
+            "\u001b[2K    Found existing installation: langgraph-checkpoint 4.0.2\n",
+            "\u001b[2K    Uninstalling langgraph-checkpoint-4.0.2:\n",
+            "\u001b[2K      Successfully uninstalled langgraph-checkpoint-4.0.2\n",
+            "\u001b[2K  Attempting uninstall: langgraph-prebuilt\n",
+            "\u001b[2K    Found existing installation: langgraph-prebuilt 1.0.10\n",
+            "\u001b[2K    Uninstalling langgraph-prebuilt-1.0.10:\n",
+            "\u001b[2K      Successfully uninstalled langgraph-prebuilt-1.0.10\n",
+            "\u001b[2K  Attempting uninstall: langgraph\n",
+            "\u001b[2K    Found existing installation: langgraph 1.1.9\n",
+            "\u001b[2K    Uninstalling langgraph-1.1.9:\n",
+            "\u001b[2K      Successfully uninstalled langgraph-1.1.9\n",
+            "\u001b[2K  Attempting uninstall: langchain\n",
+            "\u001b[2K    Found existing installation: langchain 1.2.15\n",
+            "\u001b[2K    Uninstalling langchain-1.2.15:\n",
+            "\u001b[2K      Successfully uninstalled langchain-1.2.15\n",
+            "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m6/6\u001b[0m [langchain]\n",
+            "\u001b[1A\u001b[2KSuccessfully installed faiss-cpu-1.13.2 langchain-1.3.1 langgraph-1.2.0 langgraph-checkpoint-4.1.0 langgraph-prebuilt-1.1.0 pypdf-6.12.0\n"
+          ]
+        }
+      ],
+      "source": [
+        "!pip install -q langchain_community langchain_text_splitters langchain_openai langchain_core\n",
+        "!pip install -U pip setuptools wheel\n",
+        "!pip install -U langchain langchain-community langchain-openai langchain-text-splitters langchain-classic pypdf faiss-cpu"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import os\n",
+        "from langchain_community.document_loaders import TextLoader\n",
+        "from langchain_text_splitters import RecursiveCharacterTextSplitter\n",
+        "from langchain_community.vectorstores import FAISS\n",
+        "from langchain_openai import OpenAIEmbeddings, ChatOpenAI\n",
+        "from langchain_core.prompts import ChatPromptTemplate\n",
+        "from langchain_core.output_parsers import StrOutputParser\n",
+        "from langchain_core.runnables import RunnablePassthrough"
+      ],
+      "metadata": {
+        "id": "RXNjsIhA4Wmq"
+      },
+      "execution_count": 2,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import os\n",
+        "from google.colab import userdata\n",
+        "os.environ[\"OPENAI_API_KEY\"] = userdata.get('OPENAI_API_KEY')"
+      ],
+      "metadata": {
+        "id": "QRmGYEt44l9K"
+      },
+      "execution_count": 3,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "def format_docs(docs):\n",
+        "    return \"\\n\\n\".join(doc.page_content for doc in docs)"
+      ],
+      "metadata": {
+        "id": "9E_5TTW24obp"
+      },
+      "execution_count": 4,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "def build_rag_chain(file_path: str):\n",
+        "    if not os.path.exists(file_path):\n",
+        "        raise FileNotFoundError(f\"{file_path} not found.\")\n",
+        "\n",
+        "    # 1) Ingestion\n",
+        "    docs = TextLoader(file_path).load()\n",
+        "\n",
+        "    # 2) Splitting\n",
+        "    splitter = RecursiveCharacterTextSplitter(\n",
+        "        chunk_size=300,\n",
+        "        chunk_overlap=50\n",
+        "    )\n",
+        "    chunks = splitter.split_documents(docs)\n",
+        "\n",
+        "    # 3) Embedding + Indexing\n",
+        "    embeddings = OpenAIEmbeddings(model=\"text-embedding-3-small\")\n",
+        "    vectorstore = FAISS.from_documents(chunks, embeddings)\n",
+        "\n",
+        "    # 4) Retrieval\n",
+        "    retriever = vectorstore.as_retriever(search_kwargs={\"k\": 3})\n",
+        "\n",
+        "    # 5) Generation\n",
+        "    prompt = ChatPromptTemplate.from_template(\n",
+        "        \"\"\"Answer the question using only the context below.\n",
+        "If the answer is not in the context, say: \"I do not know based on the provided document.\"\n",
+        "\n",
+        "Context:\n",
+        "{context}\n",
+        "\n",
+        "Question:\n",
+        "{question}\n",
+        "\"\"\"\n",
+        "    )\n",
+        "\n",
+        "    llm = ChatOpenAI(model=\"gpt-4o-mini\", temperature=0)\n",
+        "\n",
+        "    rag_chain = (\n",
+        "        {\n",
+        "            \"context\": retriever | format_docs,\n",
+        "            \"question\": RunnablePassthrough()\n",
+        "        }\n",
+        "        | prompt\n",
+        "        | llm\n",
+        "        | StrOutputParser()\n",
+        "    )\n",
+        "\n",
+        "    return rag_chain, retriever"
+      ],
+      "metadata": {
+        "id": "hKf0Aq3M4pUV"
+      },
+      "execution_count": 5,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "def main():\n",
+        "    rag_chain, retriever = build_rag_chain(\"it_helpdesk_kb.txt\")\n",
+        "\n",
+        "    #question = \"How do I reset my password?\"\n",
+        "    question = \"When does VPN lock?\"\n",
+        "    #question = \"What causes account lockouts?\"\n",
+        "    #question = \"Who approves software installation?\"\n",
+        "    #question = \"What should I do if I lose my device?\"\n",
+        "    #question = \"How are tickets prioritized?\"\n",
+        "    #question = \"When should a ticket be escalated?\"\n",
+        "    #question = \"When is 2+2?\"\n",
+        "    answer = rag_chain.invoke(question)\n",
+        "    source_docs = retriever.invoke(question)\n",
+        "\n",
+        "    print(\"QUESTION:\")\n",
+        "    print(question)\n",
+        "    print(\"\\nANSWER:\")\n",
+        "    print(answer)\n",
+        "    print(\"\\nRETRIEVED CHUNKS:\")\n",
+        "    for i, doc in enumerate(source_docs, start=1):\n",
+        "        print(f\"\\nChunk {i}:\")\n",
+        "        print(doc.page_content[:300])"
+      ],
+      "metadata": {
+        "id": "H79ZAETd4sLY"
+      },
+      "execution_count": 7,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "main()"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "MaiFUqUb4ybn",
+        "outputId": "25e4547b-2167-41f5-ed43-6b749e35d34d"
+      },
+      "execution_count": 8,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "QUESTION:\n",
+            "When does VPN lock?\n",
+            "\n",
+            "ANSWER:\n",
+            "VPN access may lock after 5 failed login attempts.\n",
+            "\n",
+            "RETRIEVED CHUNKS:\n",
+            "\n",
+            "Chunk 1:\n",
+            "Question: When does VPN access lock?\n",
+            "Answer: VPN access may lock after 5 failed login attempts.\n",
+            "Question: Who approves software installs?\n",
+            "\n",
+            "Chunk 2:\n",
+            "may disconnect after periods of inactivity or unstable home internet connection. If VPN access locks after 5 failed login attempts, the employee should wait the specified lockout period or contact the Helpdesk if the issue continues.\n",
+            "\n",
+            "Chunk 3:\n",
+            "User accounts may lock after multiple failed sign-in attempts. For standard network accounts, lockout typically occurs after 5 failed attempts within a short time window. VPN access may also lock after 5 failed login attempts. In most cases, locked accounts automatically unlock after 15 minutes\n"
+          ]
+        }
+      ]
+    }
+  ]
+}
